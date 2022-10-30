@@ -1,0 +1,13 @@
+<svg ...attributes fill="current">
+  {{#if this.isComponent}}
+    <this.entry.component />
+  {{else}}
+    <use xlink:href={{this.entry.href}}></use>
+  {{/if}}
+</svg>
+
+{{!--
+   <svg>
+      <use xlink:href="/your-path-to-fontawesome/sprites/solid.svg#saxophone-fire"></use>
+    </svg>
+--}}

@@ -1,3 +1,4 @@
 packages:
   - 'ember-icons'
   - 'test-app'
+  - 'example-addons/*'

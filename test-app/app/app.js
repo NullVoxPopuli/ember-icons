@@ -3,6 +3,8 @@ import Resolver from 'ember-resolver';
 import loadInitializers from 'ember-load-initializers';
 import config from 'test-app/config/environment';
 
+import { setup } from '@nullvoxpopuli/ember-icons-fontawesome';
+
 export default class App extends Application {
   modulePrefix = config.modulePrefix;
   podModulePrefix = config.podModulePrefix;
@@ -10,3 +12,5 @@ export default class App extends Application {
 }
 
 loadInitializers(App, config.modulePrefix);
+
+setup();

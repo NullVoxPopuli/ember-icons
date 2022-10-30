@@ -23,7 +23,12 @@
     "test:ember": "ember test",
     "test:watch": "ember test --server"
   },
+  "dependencies": {
+    "@nullvoxpopuli/ember-icons-fontawesome": "workspace:../example-addons/fontawesome",
+    "ember-icons": "workspace:../ember-icons"
+  },
   "devDependencies": {
+    "@babel/core": "^7.17.0",
     "@ember/optional-features": "^2.0.0",
     "@ember/test-helpers": "^2.8.1",
     "@embroider/test-setup": "^1.7.1",
@@ -43,7 +48,6 @@
     "ember-data": "~4.7.1",
     "ember-disable-prototype-extensions": "^1.1.3",
     "ember-fetch": "^8.1.2",
-    "ember-icons": "^0.0.0",
     "ember-load-initializers": "^2.1.2",
     "ember-page-title": "^7.0.0",
     "ember-qunit": "^5.1.5",
@@ -63,6 +67,7 @@
     "prettier": "^2.7.1",
     "qunit": "^2.19.1",
     "qunit-dom": "^2.0.0",
+    "svg-sprite-loader": "^6.0.11",
     "webpack": "^5.74.0"
   },
   "engines": {
