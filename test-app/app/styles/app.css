@@ -1,0 +1,54 @@
+:root {
+  --ember-brand: #E04E39;
+  --ember-black: #212121;
+  --ember-burnt-ember: #9b2918;
+  --ember-gray: #817f7f;
+  --ember-blue: #1e719b;
+  --ember-faint-gray: #efebea;
+  --ember-light-blue: #74b0ce;
+  --ember-linen: #fdf7f6;
+  --ember-yellow: #fbc840;
+  --ember-white: #fdfdfd;
+  --icon-width: auto;
+}
+table td pre {
+  text-align: left;
+  margin: 0 auto;
+  width: fit-content;
+}
+
+.top-sticky {
+  top: 0;
+  position: sticky;
+  background: white;
+}
+
+.color-ember {
+  color: var(--ember-brand);
+}
+
+.icon-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+.icon-preview {
+  display: grid;
+  justify-items: center;
+  gap: 0.5rem;
+
+  padding: 0.5rem;
+  border: 1px solid lightblue;
+}
+
+.icon-preview svg {
+  width: var(--icon-width);
+  height: var(--icon-width);
+}
+
+.icon-preview pre {
+  text-align: left;
+  margin: 0 auto;
+  width: fit-content;
+}

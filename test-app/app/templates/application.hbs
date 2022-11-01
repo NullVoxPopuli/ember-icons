@@ -1,6 +1,16 @@
+<div class="top-sticky">
+  <Remap />
+  <hr />
+  <LoadMore />
+</div>
+
+<h2>Examples</h2>
 
 <Reveal @label="From a spritesheet (FontAwesome)" @open={{true}}>
-  <Table @name="brands_ember" @group="fa-brand" />
+  <Table as |Row|>
+    <Row @name="ember" @group="fa-brand" />
+    <Row @name="npm" @group="fa-brand" />
+  </Table>
 </Reveal>
 
 <Reveal @label="SVG as components">
@@ -10,3 +20,5 @@
     <Row @name="example-a/component-c" @group="sample-components" />
   </Table>
 </Reveal>
+
+<AllGlobal />

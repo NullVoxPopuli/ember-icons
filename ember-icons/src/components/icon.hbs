@@ -1,11 +1,11 @@
 {{#let this.entry as |entry|}}
   {{#if (this.isComponent entry)}}
 
-    <entry.component fill="current" ...attributes />
+    <entry.component fill="currentColor" ...attributes />
 
   {{else}}
 
-    <svg ...attributes fill="current">
+    <svg ...attributes fill="currentColor">
       <use xlink:href={{entry.href}}></use>
     </svg>
 

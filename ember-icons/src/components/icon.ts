@@ -1,6 +1,6 @@
 import Component from '@glimmer/component';
 
-import { lookup, type Icon as IconType } from '../registry';
+import { type Icon as IconType, lookup } from '../registry';
 
 interface Signature {
   Element: SVGElement;
@@ -35,9 +35,9 @@ export default class Icon extends Component<Signature> {
   }
 
   /**
-    * For type-narrowing in the template
-    */
+   * For type-narrowing in the template
+   */
   isComponent = (entry: IconType) => {
     return 'component' in entry;
-  }
+  };
 }

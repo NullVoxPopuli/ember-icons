@@ -1,5 +1,8 @@
 import { assert } from '@ember/debug';
 
+import { TrackedMap } from 'tracked-built-ins';
+import * as DOMPurify from 'dompurify';
+
 import type { ComponentLike } from '@glint/template';
 
 type Registry = Set<string> | Map<string, ComponentLike<unknown>>;
@@ -23,18 +26,31 @@ export type Icon = { href: string } | { component: ComponentLike<{ Element: SVGE
  *
  * When there are global collisions, the group/frame registry
  * can be used to disambiguate
+*
+  * @private
+*
+  * This API is not covered under semver
  */
 export const FRAME_REGISTRY = new Map<string, Registry>();
 
 /**
  * Global name => component | SVG | etc
+*
+  * @private
+*
+  * This API is not covered under semver
  */
-export const REGISTRY = new Map<string, Entry>();
+export const REGISTRY = new TrackedMap<string, Entry>();
 
 /**
  * global name => group / frame name
  */
 const REVERSE_REGISTRY = new Map<string, string>();
+
+/**
+  *  Information about a registration;
+  */
+const REGISTRATIONS = new Map<string, SpritesheetRegistration>;
 
 interface SpritesheetRegisterOptions {
   /**
@@ -55,6 +71,18 @@ interface SpritesheetRegisterOptions {
    * This is required so that you don't have to worry about rendering your spritesheet somewhere
    */
   sheet: string;
+
+  /**
+   * Optional mapping function to use if you want the Registration name
+   * to be different from what is present in the `sheet`.
+   *
+   * For example, if `names` contains "ember", but the `id` in the
+   * svg `sheet` is `brands_ember` (due to packager plugins, or similar),
+   * you may specify the shorthand for `names`, and this mapping function
+   * here to re-add the prefix when the icon is rendered / looked up
+   * in the registry.
+   */
+  nameToIconId?: (name: string) => string;
 
   /**
    * If you wish to override any existing icons that could potentially
@@ -89,18 +117,14 @@ type RegisterOptions = SpritesheetRegisterOptions | ComponentMapRegisterOptions;
  *  - https://css-tricks.com/a-snippet-to-see-all-svgs-in-a-sprite/
  */
 export function registerIcons(options: RegisterOptions) {
-  console.log({ options });
-
   if ('components' in options) {
     registerComponents(options);
 
     return;
   }
 
-  registerSpritesheet(options);
+  SpritesheetRegistration.create(options);
 }
-
-let SHEETS = new Map<string, Element>();
 
 function registerComponents(options: ComponentMapRegisterOptions) {
   assert(`name (of the icon group) is required, received: \`${options.name}\`.`, options.name);
@@ -123,30 +147,69 @@ function registerComponents(options: ComponentMapRegisterOptions) {
   }
 }
 
-function registerSpritesheet(options: SpritesheetRegisterOptions) {
-  assert(`name (of the icon group) is required, received: \`${options.name}\`.`, options.name);
-  assert(`names are required, received: \`${options.names}\`.`, options.names);
+class SpritesheetRegistration {
+  #options: SpritesheetRegisterOptions;
+  #names: Set<string>;
 
-  FRAME_REGISTRY.set(options.name, new Set(options.names));
 
-  for (let name of options.names) {
-    assert(
-      `The icon registrary already has an entry for \`${name}\` and duplicates are not allowed.  ` +
-        `All icon names must be globally unique unless the \`replace: true\` option is used`,
-      options.replace || !REGISTRY.has(name)
-    );
+  static create(options: SpritesheetRegisterOptions) {
+    let instance = new SpritesheetRegistration(options);
 
-    REVERSE_REGISTRY.set(name, options.name);
-    REGISTRY.set(name, { type: 'SVG' });
+    REGISTRATIONS.set(options.name, instance);
+  }
 
+  constructor(options: SpritesheetRegisterOptions) {
+    this.#options = options;
+    this.#names = new Set(this.#options.names);
+    this.#createLookups();
+  }
+
+  get name() {
+    return this.#options.name;
+  }
+
+  has = (name: string) => {
+    return this.#names.has(name);
+  }
+
+  toId = (name: string) => {
+    return `#${this.#options?.nameToIconId?.(name) ?? name}`;
+  }
+
+  #createLookups() {
+    this.#verify();
+    this.#registerIcons();
+
+    if (typeof this.#options.sheet === 'string') {
+      this.#installSheet();
+    }
+  }
+
+  #verify() {
+    assert(`name (of the icon group) is required, received: \`${this.#options.name}\`.`, this.#options.name);
+    assert(`names are required, received: \`${this.#options.names}\`.`, this.#options.names);
+  }
+
+  #registerIcons() {
+    for (let name of this.#options.names) {
+      assert(
+        `The icon registrary already has an entry for \`${name}\` and duplicates are not allowed.  ` +
+          `All icon names must be globally unique unless the \`replace: true\` option is used`,
+        this.#options.replace || !REGISTRY.has(name)
+      );
+
+      REVERSE_REGISTRY.set(name, this.name);
+      REGISTRY.set(name, { type: 'SVG' });
+    }
+  }
+
+  #installSheet() {
+    let sanitized = DOMPurify.sanitize(this.#options.sheet);
     let element = document.createElement('svg');
 
-    /**
-     * TODO: SANITIZE -- very important!
-     */
-    element.innerHTML = options.sheet;
+    element.innerHTML = sanitized;
+    element.style.display = 'none';
     document.body.appendChild(element);
-    SHEETS.set(options.name, element);
   }
 }
 
@@ -160,25 +223,29 @@ export function lookup(name: string, group: string): Icon;
 export function lookup(name: string): Icon;
 
 export function lookup(name: string, group?: string): Icon {
+  assert('lookup requires an icon name to be passed as the first argument', name);
+
   if (group) {
-    let frameRegistry = FRAME_REGISTRY.get(group);
+    let registration = REGISTRATIONS.get(group);
 
-    assert(`Could not find group named ${group}`, frameRegistry);
+    assert(`Could not find registration named ${group}`, registration);
 
-    if (frameRegistry instanceof Set) {
+    if (registration instanceof SpritesheetRegistration) {
       assert(
         `Could not find Icon named "${name}" in the ${group} registry.`,
-        frameRegistry.has(name)
+        registration.has(name)
       );
 
-      return { href: `#${name}` };
+      return { href: registration.toId(name) };
     }
 
-    let entry = frameRegistry.get(name);
+    return { href: '#to-do' };
 
-    assert(`Could not find Icon named "${name}" in the ${group} registry.`, entry);
+    // let entry = frameRegistry.get(name);
 
-    return { component: entry };
+    // assert(`Could not find Icon named "${name}" in the ${group} registry.`, entry);
+
+    // return { component: entry };
   }
 
   let globalEntry = REGISTRY.get(name);
@@ -190,7 +257,14 @@ export function lookup(name: string, group?: string): Icon {
   }
 
   if (globalEntry.type === 'SVG') {
-    return { href: `#${name}` };
+    let groupName = REVERSE_REGISTRY.get(name);
+    assert(`Could not find groupName for ${name}. Has the icon been registered?`, groupName);
+
+    let registration = REGISTRATIONS.get(groupName);
+
+    assert(`Could not find registration for ${name} in group: ${groupName}. Has the icon been registered?`, registration);
+
+    return { href: registration.toId(name) };
   }
 
   assert(`Could not determine Icon`);
