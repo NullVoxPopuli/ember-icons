@@ -1,10 +1,16 @@
-<svg ...attributes fill="current">
-  {{#if this.isComponent}}
-    <this.entry.component />
+{{#let this.entry as |entry|}}
+  {{#if (this.isComponent entry)}}
+
+    <entry.component fill="current" ...attributes />
+
   {{else}}
-    <use xlink:href={{this.entry.href}}></use>
+
+    <svg ...attributes fill="current">
+      <use xlink:href={{entry.href}}></use>
+    </svg>
+
   {{/if}}
-</svg>
+{{/let}}
 
 {{!--
    <svg>

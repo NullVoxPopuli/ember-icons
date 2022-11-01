@@ -1,5 +1,5 @@
 {
-  "name": "example-with-svg-as-components",
+  "name": "@nullvoxpopuli/example-svg-as-components",
   "version": "0.0.0",
   "description": "The default blueprint for Embroider v2 addons.",
   "keywords": [
@@ -49,7 +49,7 @@
     "rollup-plugin-copy": "^3.4.0"
   },
   "publishConfig": {
-    "registry": "https://registry.npmjs.org"
+    "registry": "https://no.nay.noop"
   },
   "ember": {
     "edition": "octane"
@@ -57,7 +57,8 @@
   "ember-addon": {
     "version": 2,
     "type": "addon",
-    "main": "addon-main.js"
+    "main": "addon-main.js",
+    "app-js": {}
   },
   "exports": {
     ".": "./dist/index.js",

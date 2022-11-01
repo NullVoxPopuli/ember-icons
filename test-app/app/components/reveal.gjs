@@ -7,10 +7,15 @@ import { cell } from 'ember-resources';
       {{@label}}
     </legend>
 
-    {{#let (cell) as |state|}}
+    {{#let (cell @open) as |state|}}
       <button type="button" {{on 'click' state.toggle}}>
-        Show / Hide
+        {{#if state.current}}
+          Hide
+        {{else}}
+          Show
+        {{/if}}
       </button>
+      <br>
 
       {{#if state.current}}
         {{yield}}

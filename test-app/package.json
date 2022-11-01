@@ -25,11 +25,13 @@
   },
   "dependencies": {
     "@nullvoxpopuli/ember-icons-fontawesome": "workspace:../example-addons/fontawesome",
+    "@nullvoxpopuli/example-svg-as-components": "workspace:../example-addons/svg-as-components",
     "ember-icons": "workspace:../ember-icons",
     "ember-resources": "^5.5.0"
   },
   "devDependencies": {
     "@babel/core": "^7.17.0",
+    "@babel/runtime": "^7.20.0",
     "@ember/optional-features": "^2.0.0",
     "@ember/test-helpers": "^2.8.1",
     "@embroider/test-setup": "^1.7.1",

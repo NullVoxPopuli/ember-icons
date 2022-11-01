@@ -1,10 +1,12 @@
 
-<Reveal @label="From a spritesheet">
-  <Icon @name="ember" />
+<Reveal @label="From a spritesheet (FontAwesome)" @open={{true}}>
+  <Table @name="brands_ember" @group="fa-brand" />
 </Reveal>
 
 <Reveal @label="SVG as components">
-  <Icon @name="svg-component-a" />
-  <Icon @name="svg-component-b" />
-  <Icon @name="svg-component-c" />
+  <Table as |Row|>
+    <Row @name="example-a/component-a" @group="sample-components" />
+    <Row @name="example-a/component-b" @group="sample-components" />
+    <Row @name="example-a/component-c" @group="sample-components" />
+  </Table>
 </Reveal>

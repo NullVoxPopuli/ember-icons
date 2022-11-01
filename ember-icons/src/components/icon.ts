@@ -1,7 +1,6 @@
 import Component from '@glimmer/component';
-import { assert } from '@ember/debug';
 
-import { REGISTRY, FRAME_REGISTRY } from '../registry';
+import { lookup, type Icon as IconType } from '../registry';
 
 interface Signature {
   Element: SVGElement;
@@ -27,19 +26,18 @@ interface Signature {
 }
 
 export default class Icon extends Component<Signature> {
-  get entry() {
+  get entry(): IconType {
     if ('group' in this.args) {
-
-      let frameRegistry = FRAME_REGISTRY.get(this.args.group);
-
-      assert(`Could not find group named ${this.args.group}`, frameRegistry);
-
-      return;
+      return lookup(this.args.name, this.args.group);
     }
 
-    let globalEntry = REGISTRY.has(this.args.name);
-    assert(`Could not find Icon named "${this.args.name}" in the global icon registry.`, globalEntry);
+    return lookup(this.args.name);
+  }
 
-    return globalEntry;
+  /**
+    * For type-narrowing in the template
+    */
+  isComponent = (entry: IconType) => {
+    return 'component' in entry;
   }
 }
