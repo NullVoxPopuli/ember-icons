@@ -25,7 +25,8 @@
   },
   "dependencies": {
     "@nullvoxpopuli/ember-icons-fontawesome": "workspace:../example-addons/fontawesome",
-    "ember-icons": "workspace:../ember-icons"
+    "ember-icons": "workspace:../ember-icons",
+    "ember-resources": "^5.5.0"
   },
   "devDependencies": {
     "@babel/core": "^7.17.0",
@@ -34,6 +35,7 @@
     "@embroider/test-setup": "^1.7.1",
     "@glimmer/component": "^1.1.2",
     "@glimmer/tracking": "^1.1.2",
+    "@glint/template": "^0.9.6",
     "babel-eslint": "^10.1.0",
     "broccoli-asset-rev": "^3.0.0",
     "ember-auto-import": "^2.4.2",
@@ -54,6 +56,7 @@
     "ember-resolver": "^8.0.3",
     "ember-source": "~4.7.0",
     "ember-source-channel-url": "^3.0.0",
+    "ember-template-imports": "^3.3.1",
     "ember-template-lint": "^4.14.0",
     "ember-try": "^2.0.0",
     "eslint": "^7.32.0",

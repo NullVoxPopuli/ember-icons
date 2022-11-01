@@ -1,5 +1,5 @@
 {
-  "name": "example-with-svg-sprites-as-component",
+  "name": "example-with-svg-sprites",
   "version": "0.0.0",
   "description": "The default blueprint for Embroider v2 addons.",
   "keywords": [
@@ -36,6 +36,7 @@
     "@embroider/addon-dev": "^1.0.0",
     "@rollup/plugin-babel": "^5.3.0",
     "concurrently": "^7.2.1",
+    "ember-cli-htmlbars": "^6.1.0",
     "ember-template-lint": "^4.0.0",
     "eslint": "^7.32.0",
     "eslint-config-prettier": "^8.3.0",

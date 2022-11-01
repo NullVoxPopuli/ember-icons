@@ -1,5 +1,5 @@
 {
-  "name": "example-with-svg-sprites",
+  "name": "example-with-svg-as-components",
   "version": "0.0.0",
   "description": "The default blueprint for Embroider v2 addons.",
   "keywords": [
@@ -25,7 +25,8 @@
     "prepack": "rollup --config"
   },
   "dependencies": {
-    "@embroider/addon-shim": "^1.0.0"
+    "@embroider/addon-shim": "^1.0.0",
+    "ember-icons": "workspace:../../ember-icons"
   },
   "devDependencies": {
     "@babel/core": "^7.17.0",
@@ -36,6 +37,7 @@
     "@embroider/addon-dev": "^1.0.0",
     "@rollup/plugin-babel": "^5.3.0",
     "concurrently": "^7.2.1",
+    "ember-cli-htmlbars": "^6.1.0",
     "ember-template-lint": "^4.0.0",
     "eslint": "^7.32.0",
     "eslint-config-prettier": "^8.3.0",

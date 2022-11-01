@@ -30,7 +30,7 @@ interface SpritesheetRegisterOptions {
    * The name of this group of icons.
    * Or maybe aka the "frame" if icons are exported from Figma.
    */
-  groupName: string;
+  name: string;
 
   /**
    * The list of icon names as they appear in your SVG Sprite Sheet.
@@ -51,7 +51,7 @@ interface ComponentMapRegisterOptions {
    * The name of this group of icons.
    * Or maybe aka the "frame" if icons are exported from Figma.
    */
-  groupName: string;
+  name: string;
   /**
    * A map of string -> Component
    */
@@ -65,19 +65,21 @@ type RegisterOptions = SpritesheetRegisterOptions | ComponentMapRegisterOptions;
  *  - https://css-tricks.com/a-snippet-to-see-all-svgs-in-a-sprite/
  */
 export function registerIcons(options: RegisterOptions) {
+  console.log({ options });
+
   if ('componentMap' in options) {
-    assert(`groupName is required, received: \`${options.groupName}\`.`, options.groupName);
+    assert(`name (of the icon group) is required, received: \`${options.name}\`.`, options.name);
     assert(`componentMap is required.`, options.componentMap);
 
-    FRAME_REGISTRY.set(options.groupName, new Map(Object.entries(options.componentMap)));
+    FRAME_REGISTRY.set(options.name, new Map(Object.entries(options.componentMap)));
 
     return;
   }
 
-  assert(`groupName is required, received: \`${options.groupName}\`.`, options.groupName);
+  assert(`name (of the icon group) is required, received: \`${options.name}\`.`, options.name);
   assert(`names are required, received: \`${options.names}\`.`, options.names);
 
-  FRAME_REGISTRY.set(options.groupName, new Set(options.names));
+  FRAME_REGISTRY.set(options.name, new Set(options.names));
 
   for (let name of options.names) {
     assert(
