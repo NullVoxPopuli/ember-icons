@@ -1,5 +1,24 @@
-{{page-title "TestApp"}}
+<div class="top-sticky">
+  <Remap />
+  <hr />
+  <LoadMore />
+</div>
 
-<h2 id="title">Welcome to Ember</h2>
+<h2>Examples</h2>
 
-{{outlet}}
+<Reveal @label="From a spritesheet (FontAwesome)" @open={{true}}>
+  <Table as |Row|>
+    <Row @name="ember" @group="fa-brand" />
+    <Row @name="npm" @group="fa-brand" />
+  </Table>
+</Reveal>
+
+<Reveal @label="SVG as components">
+  <Table as |Row|>
+    <Row @name="example-a/component-a" @group="sample-components" />
+    <Row @name="example-a/component-b" @group="sample-components" />
+    <Row @name="example-a/component-c" @group="sample-components" />
+  </Table>
+</Reveal>
+
+<AllGlobal />

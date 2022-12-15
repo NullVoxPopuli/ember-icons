@@ -1,0 +1,18 @@
+{
+  "$schema": "http://json.schemastore.org/tsconfig",
+  "extends": "@tsconfig/ember/tsconfig.json",
+  "compilerOptions": {
+    // Path resolution
+    "moduleResolution": "node",
+
+    // This addon does not allow JavaScript
+    "allowJs": false,
+
+    // Strictness / Correctness
+    "strict": true
+  },
+  "include": [
+    "src/**/*",
+    "internal-types/**/*"
+  ]
+}

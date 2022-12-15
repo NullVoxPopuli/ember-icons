@@ -6,6 +6,7 @@
   "license": "MIT",
   "author": "",
   "scripts": {
+    "demo": "pnpm turbo --filter test-app start",
     "prepare": "pnpm build",
     "build": "pnpm --filter ember-icons build",
     "start": "concurrently 'npm:start:*' --restart-after 5000 --prefix-colors cyan,white,yellow",
@@ -22,5 +23,8 @@
   "workspaces": [
     "ember-icons",
     "test-app"
-  ]
+  ],
+  "dependencies": {
+    "turbo": "^1.6.2"
+  }
 }

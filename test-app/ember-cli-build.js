@@ -6,6 +6,16 @@ module.exports = function (defaults) {
   let app = new EmberApp(defaults, {
     autoImport: {
       watchDependencies: ['ember-icons'],
+      webpack: {
+        module: {
+          rules: [
+            {
+              test: /\.svg$/,
+              loader: 'svg-sprite-loader',
+            },
+          ],
+        },
+      },
     },
   });
 
