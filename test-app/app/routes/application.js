@@ -12,3 +12,4 @@ export default class Application extends Route {
     await Promise.all([fontawesome.setupBrand(), setupExampleComponents()]);
   }
 }
+

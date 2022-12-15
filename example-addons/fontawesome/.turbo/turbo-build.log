@@ -1,7 +1,0 @@
-
-> @nullvoxpopuli/ember-icons-fontawesome@0.0.0 build /home/nullvoxpopuli/Development/NullVoxPopuli/ember-icons/example-addons/fontawesome
-> rollup --config
-
-[36m
- → [1mdist[22m...[39m
-[32mcreated [1mdist[22m in [1m338ms[22m[39m

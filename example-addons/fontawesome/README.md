@@ -1,3 +1,6 @@
+This demo:
+ - dynamically loads SVGs sheets via manual call in the app (gated by beforeModel)
+
 ## Usage
 
 Your packager must have a way to handle SVG paths in the module graph.
